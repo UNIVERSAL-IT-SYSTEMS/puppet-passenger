@@ -52,6 +52,16 @@ class passenger::config {
         notify  => Service['httpd'],
       }
     }
+    'gentoo': {
+      file { '/etc/apache2/modules.d/passenger.conf':
+        ensure  => present,
+        content => template('passenger/passenger-conf.erb'),
+        owner   => '0',
+        group   => '0',
+        mode    => '0644',
+        notify  => Service['httpd'],
+      }
+    }
     default:{
       fail("Operating system ${::operatingsystem} is not supported with the Passenger module")
     }

@@ -16,6 +16,8 @@ class passenger::params {
   $passenger_ruby     = '/usr/bin/ruby'
   $package_provider   = 'gem'
   $passenger_provider = 'gem'
+  $gentoo_keywords    = ''
+  $gentoo_use         = ''
 
   if versioncmp ($passenger_version, '4.0.0') > 0 {
     $builddir     = 'buildout'
@@ -47,6 +49,14 @@ class passenger::params {
       $gem_binary_path        = '/usr/lib/ruby/gems/1.8/gems/bin'
       $passenger_root         = "/usr/lib/ruby/gems/1.8/gems/passenger-${passenger_version}"
       $mod_passenger_location = "/usr/lib/ruby/gems/1.8/gems/passenger-${passenger_version}/ext/apache2/mod_passenger.so"
+    }
+    'gentoo': {
+      $package_name           = 'www-apache/passenger'
+      $passenger_package      = 'www-apache/passenger'
+      $gem_path               = '/usr/lib/ruby/gems/1.9.1/gems'
+      $gem_binary_path        = '/usr/lib/ruby/gems/1.9.1/gems/bin'
+      $passenger_root         = '/usr/lib/ruby/site_ruby/1.9.1/phusion_passenger'
+      $mod_passenger_location = '/usr/lib/apache2/modules/mod_passenger.so'
     }
     'darwin':{
       $package_name           = 'passenger'

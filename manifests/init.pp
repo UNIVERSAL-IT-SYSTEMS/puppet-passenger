@@ -58,6 +58,8 @@ class passenger (
   $passenger_root         = $passenger::params::passenger_root,
   $passenger_ruby         = $passenger::params::passenger_ruby,
   $passenger_version      = $passenger::params::passenger_version,
+  $gentoo_keywords        = $passenger::params::gentoo_keywords,
+  $gentoo_use             = $passenger::params::gentoo_use,
 ) inherits passenger::params {
 
   include '::apache'
