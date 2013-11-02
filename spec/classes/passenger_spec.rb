@@ -54,7 +54,23 @@ describe 'passenger' do
     end
   end
 
-  ['redhat', 'debian'].each do |osfamily|
+  describe 'on Gentoo' do
+    let(:facts) do
+      { :osfamily => 'gentoo', :concat_basedir => '/dne' }
+    end
+
+    it 'installs passenger' do
+      should contain_portage__package('www-apache/passenger')
+    end
+
+    it 'adds httpd config' do
+      should contain_file('/etc/apache2/modules.d/passenger.conf').with_content(/LoadModule passenger_module \/usr\/lib\/apache2\/modules\/mod_passenger.so/)
+      should contain_file('/etc/apache2/modules.d/passenger.conf').with_content(/PassengerRoot \/usr\/lib\/ruby\/site_ruby\/1.9.1\/phusion_passenger/)
+      should contain_file('/etc/apache2/modules.d/passenger.conf').with_content(/PassengerRuby \/usr\/bin\/ruby/)
+    end
+  end
+
+  ['redhat', 'debian', 'gentoo'].each do |osfamily|
     let(:facts) do
       { :osfamily => osfamily, :operatingsystemrelease => 'thing', :concat_basedir => '/dne' }
     end
